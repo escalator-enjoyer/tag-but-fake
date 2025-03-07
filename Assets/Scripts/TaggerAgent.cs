@@ -35,18 +35,20 @@ public class TaggerAgent : Agent
         CheckRemainingTime();
     }
 
-    public override void CollectObservations(VectorSensor sensor)
+    /*public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
-    }
+    }*/
 
     public override void OnActionReceived(ActionBuffers actions)
     {
         float rotate = actions.ContinuousActions[0];
         float move = actions.ContinuousActions[1];
+        float vert = actions.ContinuousActions[2];
 
-        rb.MovePosition(transform.forward * move * multiplier * Time.deltaTime + transform.position);
-        transform.Rotate(0f, rotate * multiplier, 0f, Space.Self);
+        rb.AddForce(transform.forward * move * multiplier);
+        rb.AddForce(Vector3.up * vert * multiplier, ForceMode.Force);
+        transform.Rotate(0f, rotate * 10f, 0f, Space.Self);
         transform.rotation = Quaternion.Euler(new Vector3(0f, transform.rotation.eulerAngles.y, 0f));
         AddReward(-0.001f * (transform.localPosition - target.localPosition).magnitude);
     }
@@ -56,6 +58,7 @@ public class TaggerAgent : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
         continuousActions[1] = Input.GetAxisRaw("Vertical");
+        continuousActions[2] = Input.GetAxisRaw("VeryVertical");
     }
 
     private void OnCollisionEnter(Collision collision)

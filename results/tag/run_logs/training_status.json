@@ -1,99 +1,45 @@
 {
-    "Tagger": {
-        "checkpoints": [
-            {
-                "steps": 149654,
-                "file_path": "results\\tag\\Tagger\\Tagger-149654.onnx",
-                "reward": 0.9958923179656267,
-                "creation_time": 1741296570.738535,
-                "auxillary_file_paths": [
-                    "results\\tag\\Tagger\\Tagger-149654.pt"
-                ]
-            },
-            {
-                "steps": 440803,
-                "file_path": "results\\tag\\Tagger\\Tagger-440803.onnx",
-                "reward": 36.62277857552875,
-                "creation_time": 1741297022.5449042,
-                "auxillary_file_paths": [
-                    "results\\tag\\Tagger\\Tagger-440803.pt"
-                ]
-            },
-            {
-                "steps": 463608,
-                "file_path": "results\\tag\\Tagger\\Tagger-463608.onnx",
-                "reward": 40.7647069587427,
-                "creation_time": 1741297114.8719218,
-                "auxillary_file_paths": [
-                    "results\\tag\\Tagger\\Tagger-463608.pt"
-                ]
-            },
-            {
-                "steps": 3685421,
-                "file_path": "results\\tag\\Tagger\\Tagger-3685421.onnx",
-                "reward": 33.920756939177714,
-                "creation_time": 1741301362.1140018,
-                "auxillary_file_paths": [
-                    "results\\tag\\Tagger\\Tagger-3685421.pt"
-                ]
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 3685421,
-            "file_path": "results\\tag\\Tagger.onnx",
-            "reward": 33.920756939177714,
-            "creation_time": 1741301362.1140018,
-            "auxillary_file_paths": [
-                "results\\tag\\Tagger\\Tagger-3685421.pt"
-            ]
-        }
-    },
     "Runner": {
         "checkpoints": [
             {
-                "steps": 149694,
-                "file_path": "results\\tag\\Runner\\Runner-149694.onnx",
-                "reward": -9.178289215815695,
-                "creation_time": 1741296570.8020618,
+                "steps": 9,
+                "file_path": "results\\tag\\Runner\\Runner-9.onnx",
+                "reward": -100.20999908447266,
+                "creation_time": 1741374752.0115736,
                 "auxillary_file_paths": [
-                    "results\\tag\\Runner\\Runner-149694.pt"
-                ]
-            },
-            {
-                "steps": 440827,
-                "file_path": "results\\tag\\Runner\\Runner-440827.onnx",
-                "reward": -29.877169712534492,
-                "creation_time": 1741297022.6845355,
-                "auxillary_file_paths": [
-                    "results\\tag\\Runner\\Runner-440827.pt"
-                ]
-            },
-            {
-                "steps": 463600,
-                "file_path": "results\\tag\\Runner\\Runner-463600.onnx",
-                "reward": -33.32933425108592,
-                "creation_time": 1741297114.8181777,
-                "auxillary_file_paths": [
-                    "results\\tag\\Runner\\Runner-463600.pt"
-                ]
-            },
-            {
-                "steps": 3685453,
-                "file_path": "results\\tag\\Runner\\Runner-3685453.onnx",
-                "reward": -18.026893064813706,
-                "creation_time": 1741301362.164068,
-                "auxillary_file_paths": [
-                    "results\\tag\\Runner\\Runner-3685453.pt"
+                    "results\\tag\\Runner\\Runner-9.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 3685453,
+            "steps": 9,
             "file_path": "results\\tag\\Runner.onnx",
-            "reward": -18.026893064813706,
-            "creation_time": 1741301362.164068,
+            "reward": -100.20999908447266,
+            "creation_time": 1741374752.0115736,
             "auxillary_file_paths": [
-                "results\\tag\\Runner\\Runner-3685453.pt"
+                "results\\tag\\Runner\\Runner-9.pt"
+            ]
+        }
+    },
+    "Tagger": {
+        "checkpoints": [
+            {
+                "steps": 9,
+                "file_path": "results\\tag\\Tagger\\Tagger-9.onnx",
+                "reward": 99.94950103759766,
+                "creation_time": 1741374752.0683048,
+                "auxillary_file_paths": [
+                    "results\\tag\\Tagger\\Tagger-9.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 9,
+            "file_path": "results\\tag\\Tagger.onnx",
+            "reward": 99.94950103759766,
+            "creation_time": 1741374752.0683048,
+            "auxillary_file_paths": [
+                "results\\tag\\Tagger\\Tagger-9.pt"
             ]
         }
     },
