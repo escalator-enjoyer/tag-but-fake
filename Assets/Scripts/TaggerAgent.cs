@@ -16,6 +16,7 @@ public class TaggerAgent : Agent
     [SerializeField] private RunnerAgent runnerClass;
     [SerializeField] private Transform objectsParent;
     [SerializeField] private float timePerEpisode = 60f;
+    [SerializeField] private Transform mainSensor;
 
     private float xRotation = 0f;
     private bool isGrounded = false;
@@ -118,10 +119,20 @@ public class TaggerAgent : Agent
     {
         sensor.AddObservation((target.localPosition - transform.localPosition).magnitude);
         sensor.AddObservation(rb.velocity);
+        sensor.AddObservation(transform.forward);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+        float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -45f, 45f);
+        mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
         float vertical = actions.ContinuousActions[2];
         float horizontal = actions.ContinuousActions[3];
         Vector3 moveDirection = (transform.forward * vertical + transform.right * horizontal).normalized;

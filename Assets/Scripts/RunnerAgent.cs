@@ -13,6 +13,7 @@ public class RunnerAgent : Agent
     [SerializeField] private Camera agentCamera;
     [SerializeField] private float mouseSensitivity = 100f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private Transform mainSensor;
 
     private float xRotation = 0f;
     private bool isGrounded = false;
@@ -111,10 +112,20 @@ public class RunnerAgent : Agent
     {
         sensor.AddObservation((tagger.localPosition - transform.localPosition).magnitude);
         sensor.AddObservation(rb.velocity);
+        sensor.AddObservation(transform.forward);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+        float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -45f, 45f);
+        mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
         float vertical = actions.ContinuousActions[2];
         float horizontal = actions.ContinuousActions[3];
         Vector3 moveDirection = (transform.forward * vertical + transform.right * horizontal).normalized;
