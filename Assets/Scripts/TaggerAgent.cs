@@ -119,19 +119,23 @@ public class TaggerAgent : Agent
     {
         sensor.AddObservation((target.localPosition - transform.localPosition).magnitude);
         sensor.AddObservation(rb.velocity);
-        sensor.AddObservation(transform.forward);
+        sensor.AddObservation(isGrounded);
+        sensor.AddObservation(mainSensor.localRotation);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
-        float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+        if (!agentCamera.gameObject.activeSelf)
+        {
+            float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+            float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
 
-        transform.Rotate(Vector3.up * mouseX);
+            transform.Rotate(Vector3.up * mouseX);
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -45f, 45f);
-        mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -45f, 45f);
+            mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
 
         float vertical = actions.ContinuousActions[2];
         float horizontal = actions.ContinuousActions[3];

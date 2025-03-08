@@ -19,7 +19,6 @@ public class RunnerAgent : Agent
     private bool isGrounded = false;
     private bool jumpRequested = false;
     private float lastJumpTime = -1f;
-    private float previousDistance;
 
     private float mouseX, mouseY;
 
@@ -37,7 +36,6 @@ public class RunnerAgent : Agent
         rb.velocity = Vector3.zero;
         transform.localRotation = Quaternion.Euler(new Vector3(0, Random.Range(-180f, 180f), 0));
         transform.localPosition = new Vector3(Random.Range(-45f, 45f), 5f, Random.Range(-45f, 45f));
-        previousDistance = (tagger.localPosition - transform.localPosition).magnitude;
     }
 
     private void Update()
@@ -78,14 +76,7 @@ public class RunnerAgent : Agent
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (Time.time - lastJumpTime < 0.3f)
-                {
-                    jumpRequested = false;
-                }
-                else
-                {
-                    jumpRequested = true;
-                }
+                jumpRequested = true;
                 lastJumpTime = Time.time;
             }
         }
@@ -112,19 +103,24 @@ public class RunnerAgent : Agent
     {
         sensor.AddObservation((tagger.localPosition - transform.localPosition).magnitude);
         sensor.AddObservation(rb.velocity);
-        sensor.AddObservation(transform.forward);
+        sensor.AddObservation(isGrounded);
+        sensor.AddObservation(mainSensor.localRotation);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
-        float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+        if (!agentCamera.gameObject.activeSelf)
+        {
+            float mouseX = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
+            float mouseY = actions.ContinuousActions[0] * mouseSensitivity * Time.fixedDeltaTime;
 
-        transform.Rotate(Vector3.up * mouseX);
+            transform.Rotate(Vector3.up * mouseX);
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -45f, 45f);
-        mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -45f, 45f);
+            mainSensor.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
+           
 
         float vertical = actions.ContinuousActions[2];
         float horizontal = actions.ContinuousActions[3];
@@ -138,9 +134,7 @@ public class RunnerAgent : Agent
             isGrounded = false;
         }
 
-        float currentDistance = (tagger.localPosition - transform.localPosition).magnitude;
-        AddReward(0.001f * (currentDistance - previousDistance));
-        previousDistance = currentDistance;
+        AddReward(0.001f);
     }
 
     private void OnCollisionStay(Collision collision)
